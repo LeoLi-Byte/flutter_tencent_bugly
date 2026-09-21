@@ -1,0 +1,33 @@
+name: flutter_tencent_bugly
+description: "A lightweight Flutter monitoring plugin for Tencent Bugly, focusing on mobile application exception capture and operational data analysis."
+version: 0.0.1
+homepage: https://github.com/LeoLi-Byte
+repository: https://github.com/LeoLi-Byte/flutter_tencent_bugly
+issue_tracker: https://github.com/LeoLi-Byte/flutter_tencent_bugly/issues
+topics:
+  - tencent
+  - bugly
+  - crash
+
+environment:
+  sdk: ^3.11.0
+  flutter: '>=3.41.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  plugin_platform_interface: ^2.1.8
+
+dev_dependencies:
+  flutter_lints: ^6.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: org.leoli.plugin.flutter_tencent_bugly
+        pluginClass: FlutterTencentBuglyPlugin
+      ios:
+        pluginClass: FlutterTencentBuglyPlugin
