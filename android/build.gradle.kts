@@ -36,8 +36,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+        }
     }
 
     sourceSets {
@@ -51,6 +53,9 @@ android {
 
     defaultConfig {
         minSdk = 24
+
+        // library 混淆 -> 随 library 引用，自动添加到 apk 打包混淆
+        consumerProguardFiles("proguard-rules.pro")
     }
 
     testOptions {
@@ -73,4 +78,6 @@ android {
 dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("org.mockito:mockito-core:5.0.0")
+
+    implementation("com.tencent.bugly:crashreport:4.1.9.3")
 }
