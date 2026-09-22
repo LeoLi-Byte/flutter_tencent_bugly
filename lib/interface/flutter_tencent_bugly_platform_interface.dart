@@ -111,9 +111,9 @@ abstract class FlutterTencentBuglyPlatform extends PlatformInterface {
   /// 上报自定义异常
   /// {@endtemplate}
   Future<void> postException({
-    required String message,
-    required String detail,
-    String? type,
+    required dynamic message,
+    required dynamic detail,
+    dynamic type,
     Map<String, dynamic>? extra,
   }) {
     throw UnimplementedError('postException() has not been implemented.');
@@ -130,5 +130,25 @@ abstract class FlutterTencentBuglyPlatform extends PlatformInterface {
   /// {@endtemplate}
   Future<void> log({required String tag, required String message, LogLevel level = .INFO}) {
     throw UnimplementedError('log() has not been implemented.');
+  }
+
+  /// {@template plugin.flutter_tencent_bugly.runGuarded}
+  /// 异常上报。该方法等同于 [runZonedGuarded]。
+  ///
+  /// [body] 运行的内容。
+  /// [onException] 自定义异常处理，可用于异常打印、双上报等定制逻辑。该字段不影响上报。
+  /// [filterPattern] 针对 message 正则过滤异常上报，命中则不上报。
+  /// [reportInDebugMode] 是否在调试模式也上报。
+  ///
+  /// 全局异常捕获回调（[FlutterError.onError] 与 [PlatformDispatcher.onError]）
+  /// 仅在首次调用时安装，重复调用不会重复注册；安装前已存在的回调会被链式保留。
+  /// {@endtemplate}
+  void runGuarded<T>(
+    ValueGetter<T> body, {
+    FlutterExceptionHandler? onException,
+    String? filterPattern,
+    bool reportInDebugMode = false,
+  }) {
+    throw UnimplementedError('runGuarded() has not been implemented.');
   }
 }

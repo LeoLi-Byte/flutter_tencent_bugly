@@ -16,7 +16,7 @@ abstract class FlutterTencentBuglyBaseConfig {
   final String appId;
 
   /// 参数
-  Map<String, dynamic> toJson();
+  Map<String, dynamic> toJson() => <String, dynamic>{'appId': appId};
 }
 
 /// Android 配置项
@@ -51,6 +51,7 @@ class FlutterTencentBuglyAndroidConfig extends FlutterTencentBuglyBaseConfig {
 
   @override
   Map<String, dynamic> toJson() => <String, dynamic>{
+    ...super.toJson(),
     'packageName': ?packageName.value,
     'deviceModel': ?deviceModel.value,
     'reportDelay': reportDelay,
@@ -102,6 +103,7 @@ class FlutterTencentBuglyIOSConfig extends FlutterTencentBuglyBaseConfig {
 
   @override
   Map<String, dynamic> toJson() => <String, dynamic>{
+    ...super.toJson(),
     'blockMonitorEnable': blockMonitorEnable,
     'blockMonitorTimeout': blockMonitorTimeout,
     'symbolicateInProcessEnable': symbolicateInProcessEnable,

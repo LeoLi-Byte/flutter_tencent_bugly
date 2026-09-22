@@ -1,5 +1,7 @@
 library;
 
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tencent_bugly/src/extension_string.dart';
@@ -51,13 +53,26 @@ class FlutterTencentBugly {
 
   /// {@macro plugin.flutter_tencent_bugly.postException}
   Future<void> postException({
-    required String message,
-    required String detail,
-    String? type,
+    required dynamic message,
+    required dynamic detail,
+    dynamic type,
     Map<String, dynamic>? extra,
   }) => FlutterTencentBuglyPlatform.instance.postException(message: message, detail: detail, type: type, extra: extra);
 
   /// {@macro plugin.flutter_tencent_bugly.log}
   Future<void> log({required String tag, required String message, LogLevel level = .INFO}) =>
       FlutterTencentBuglyPlatform.instance.log(tag: tag, message: message, level: level);
+
+  /// {@macro plugin.flutter_tencent_bugly.runGuarded}
+  void runGuarded<T>(
+    ValueGetter<T> body, {
+    FlutterExceptionHandler? onException,
+    String? filterPattern,
+    bool reportInDebugMode = false,
+  }) => FlutterTencentBuglyPlatform.instance.runGuarded(
+    body,
+    onException: onException,
+    filterPattern: filterPattern,
+    reportInDebugMode: reportInDebugMode,
+  );
 }

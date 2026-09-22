@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_tencent_bugly/flutter_tencent_bugly.dart';
 import 'package:flutter_tencent_bugly/src/config.dart';
 import 'package:flutter_tencent_bugly/src/log_level.dart';
@@ -41,14 +42,22 @@ class MockFlutterTencentBuglyPlatform with MockPlatformInterfaceMixin implements
 
   @override
   Future<void> postException({
-    required String message,
-    required String detail,
-    String? type,
+    required dynamic message,
+    required dynamic detail,
+    dynamic type,
     Map<String, dynamic>? extra,
   }) => Future<void>.value();
 
   @override
   Future<void> log({required String tag, required String message, LogLevel level = .INFO}) => Future<void>.value();
+
+  @override
+  void runGuarded<T>(
+    ValueGetter<T> body, {
+    FlutterExceptionHandler? onException,
+    String? filterPattern,
+    bool reportInDebugMode = false,
+  }) {}
 }
 
 void main() {
