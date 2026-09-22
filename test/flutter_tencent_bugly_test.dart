@@ -1,10 +1,54 @@
 import 'package:flutter_tencent_bugly/flutter_tencent_bugly.dart';
+import 'package:flutter_tencent_bugly/src/config.dart';
+import 'package:flutter_tencent_bugly/src/log_level.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 class MockFlutterTencentBuglyPlatform with MockPlatformInterfaceMixin implements FlutterTencentBuglyPlatform {
   @override
   Future<String?> getPlatformVersion() => Future<String>.value('42');
+
+  @override
+  Future<bool> init({
+    FlutterTencentBuglyConfig? config,
+    FlutterTencentBuglyAndroidConfig? android,
+    FlutterTencentBuglyIOSConfig? ios,
+  }) => Future<bool>.value(false);
+
+  @override
+  Future<void> setUserId(String value) => Future<void>.value();
+
+  @override
+  Future<void> setUserTag(String value) => Future<void>.value();
+
+  @override
+  Future<void> setDeviceID(String value) => Future<void>.value();
+
+  @override
+  Future<void> setDeviceModel(String value) => Future<void>.value();
+
+  @override
+  Future<void> setChannel(String value) => Future<void>.value();
+
+  @override
+  Future<void> setVersion(String value) => Future<void>.value();
+
+  @override
+  Future<void> setPackageName(String value) => Future<void>.value();
+
+  @override
+  Future<void> putUserData({required String key, required String value}) => Future<void>.value();
+
+  @override
+  Future<void> postException({
+    required String message,
+    required String detail,
+    String? type,
+    Map<String, dynamic>? extra,
+  }) => Future<void>.value();
+
+  @override
+  Future<void> log({required String tag, required String message, LogLevel level = .INFO}) => Future<void>.value();
 }
 
 void main() {
