@@ -45,7 +45,7 @@ public class FlutterTencentBuglyPlugin: NSObject, FlutterPlugin {
     /// 建议通过 deviceId 参数设置业务唯一 id，使 crash 率统计更精准。
     private func initialize(_ arguments: [String: Any], result: FlutterResult) {
         guard let appId = arguments.nonBlankString("appId") else {
-            result(jsonString(["message": "Bugly appId不能为空", "isSuccess": false]))
+            result(false)
             return
         }
 
@@ -58,10 +58,6 @@ public class FlutterTencentBuglyPlugin: NSObject, FlutterPlugin {
         if let deviceId = arguments.nonBlankString("deviceId") { config.deviceIdentifier = deviceId }
         config.blockMonitorEnable = arguments.bool("blockMonitorEnable")
         if let blockMonitorTimeout = arguments["blockMonitorTimeout"] as? NSNumber { config.blockMonitorTimeout = blockMonitorTimeout.doubleValue }
-        config.blockReportImmediately = arguments.bool("blockReportImmediately")
-        config.crashMonitorEnable = arguments.bool("crashMonitorEnable")
-        config.blockCountMonitorEnable = arguments.bool("blockCountMonitorEnable")
-        config.blockReportCallStackEnable = arguments.bool("blockReportCallStackEnable")
         if let symbolicateInProcessEnable = arguments.optionalBool("symbolicateInProcessEnable") { config.symbolicateInProcessEnable = symbolicateInProcessEnable }
         config.unexpectedTerminatingDetectionEnable = arguments.bool("unexpectedTerminatingDetectionEnable")
         if let viewControllerTrackingEnable = arguments.optionalBool("viewControllerTrackingEnable") { config.viewControllerTrackingEnable = viewControllerTrackingEnable }
@@ -71,7 +67,7 @@ public class FlutterTencentBuglyPlugin: NSObject, FlutterPlugin {
         if config.debugMode {
             NSLog("Bugly appId: %@", appId)
         }
-        result(jsonString(["message": "Bugly 初始化成功", "appId": appId, "isSuccess": true]))
+        result(true)
     }
 
     /// 设置用户ID
@@ -131,14 +127,6 @@ public class FlutterTencentBuglyPlugin: NSObject, FlutterPlugin {
         let message = arguments["message"] as? String ?? ""
         BuglyLogBridge.log(with: level, tag: arguments.nonBlankString("tag"), message: message)
         result(nil)
-    }
-
-    /// 将字典序列化为 JSON 字符串
-    private func jsonString(_ dict: [String: Any]) -> String? {
-        guard let data = try? JSONSerialization.data(withJSONObject: dict, options: .prettyPrinted) else {
-            return nil
-        }
-        return String(data: data, encoding: .utf8)
     }
 }
 

@@ -58,18 +58,14 @@ class FlutterTencentBuglyPlugin : FlutterPlugin, MethodCallHandler {
     private fun init(call: MethodCall, result: Result) {
         val appId = call.argument<String>("appId")
         if (appId.isNullOrEmpty()) {
-            result.success(
-                mapOf(
-                    "isSuccess" to false, "appId" to null, "message" to "Bugly appId不能为空"
-                )
-            )
+            result.success(false)
             return
         }
 
         val strategy = CrashReport.UserStrategy(applicationContext)
 
         // 配置参数
-        withArg<Boolean>(call, "isBuglyLogUpload") { strategy.isBuglyLogUpload = it }
+        withArg<Boolean>(call, "isLogUpload") { strategy.isBuglyLogUpload = it }
         withArg<Boolean>(call, "isDevelopmentDevice") { setIsDevelopmentDevice(it) }
         withNonEmptyStringArg(call, "channel") { strategy.appChannel = it }
         withNonEmptyStringArg(call, "version") { strategy.appVersion = it }
@@ -77,8 +73,8 @@ class FlutterTencentBuglyPlugin : FlutterPlugin, MethodCallHandler {
         withNonEmptyStringArg(call, "deviceId") { strategy.deviceID = it }
         withNonEmptyStringArg(call, "deviceModel") { strategy.deviceModel = it }
         withArg<Number>(call, "reportDelay") { strategy.appReportDelay = it.toLong() }
-        withArg<Boolean>(call, "isEnableCatchAnrTrace") { strategy.isEnableCatchAnrTrace = it }
-        withArg<Boolean>(call, "isEnableRecordAnrMainStack") {
+        withArg<Boolean>(call, "enableCatchAnrTrace") { strategy.isEnableCatchAnrTrace = it }
+        withArg<Boolean>(call, "enableRecordAnrMainStack") {
             strategy.isEnableRecordAnrMainStack = it
         }
         val isDebugMode = call.argument<Boolean>("isDebugMode") == true
@@ -86,11 +82,7 @@ class FlutterTencentBuglyPlugin : FlutterPlugin, MethodCallHandler {
         // 初始化
         CrashReport.initCrashReport(applicationContext, appId, isDebugMode, strategy)
         if (isDebugMode) Log.i(TAG, "Bugly appId: $appId")
-        result.success(
-            mapOf(
-                "isSuccess" to true, "appId" to appId, "message" to "Bugly 初始化成功"
-            )
-        )
+        result.success(true)
     }
 
     /**
