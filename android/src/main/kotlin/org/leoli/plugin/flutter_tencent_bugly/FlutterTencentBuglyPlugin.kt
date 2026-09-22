@@ -36,7 +36,7 @@ class FlutterTencentBuglyPlugin : FlutterPlugin, MethodCallHandler {
             "setDeviceModel" -> setDeviceModel(call, result)
             "setChannel" -> setChannel(call, result)
             "setVersion" -> setVersion(call, result)
-            "setAppPackageName" -> setPackageName(call, result)
+            "setPackageName" -> setPackageName(call, result)
             "putUserData" -> putUserData(call, result)
             "postException" -> postException(call, result)
             "log" -> log(call, result)
@@ -155,12 +155,7 @@ class FlutterTencentBuglyPlugin : FlutterPlugin, MethodCallHandler {
      * 设置包名
      */
     private fun setPackageName(call: MethodCall, result: Result) {
-        withNonEmptyStringArg(call, "appPackage") {
-            CrashReport.setAppPackage(
-                applicationContext,
-                it
-            )
-        }
+        withNonEmptyStringArg(call, "value") { CrashReport.setAppPackage(applicationContext, it) }
         result.success(true)
     }
 
@@ -188,7 +183,7 @@ class FlutterTencentBuglyPlugin : FlutterPlugin, MethodCallHandler {
                 if (type.isNullOrEmpty()) message else type,
                 message,
                 it,
-                call.argument("data")
+                call.argument<Map<String, Any?>>("data")?.mapValues { (_, v) -> v.toString() }
             )
         }
         result.success(true)
