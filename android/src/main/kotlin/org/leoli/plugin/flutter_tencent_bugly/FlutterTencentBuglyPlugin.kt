@@ -2,7 +2,6 @@ package org.leoli.plugin.flutter_tencent_bugly
 
 import android.content.Context
 import android.os.Build
-import com.tencent.bugly.crashreport.BuglyLog
 import com.tencent.bugly.crashreport.CrashReport
 import io.flutter.Log
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -10,15 +9,6 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-
-/** Bugly 日志级别，与 Dart 侧约定保持一致 */
-private object LogLevel {
-    const val VERBOSE = 0
-    const val DEBUG = 1
-    const val INFO = 2
-    const val WARN = 3
-    const val ERROR = 4
-}
 
 /** FlutterTencentBuglyPlugin */
 class FlutterTencentBuglyPlugin : FlutterPlugin, MethodCallHandler {
@@ -48,7 +38,6 @@ class FlutterTencentBuglyPlugin : FlutterPlugin, MethodCallHandler {
             "setAppPackageName" -> setPackageName(call, result)
             "putUserData" -> putUserData(call, result)
             "postException" -> postException(call, result)
-            "log" -> log(call, result)
             else -> result.notImplemented()
         }
     }
@@ -209,24 +198,6 @@ class FlutterTencentBuglyPlugin : FlutterPlugin, MethodCallHandler {
                 it,
                 call.argument("data")
             )
-        }
-        result.success(true)
-    }
-
-    /**
-     * 输出 Bugly 日志
-     */
-    private fun log(call: MethodCall, result: Result) {
-        val level = call.argument<Int>("level") ?: -1
-        val tag = call.argument<String>("tag")
-        val message = call.argument<String>("message")
-        when (level) {
-            LogLevel.ERROR -> BuglyLog.e(tag, message)
-            LogLevel.WARN -> BuglyLog.w(tag, message)
-            LogLevel.INFO -> BuglyLog.i(tag, message)
-            LogLevel.DEBUG -> BuglyLog.d(tag, message)
-            LogLevel.VERBOSE -> BuglyLog.v(tag, message)
-            else -> Unit
         }
         result.success(true)
     }
