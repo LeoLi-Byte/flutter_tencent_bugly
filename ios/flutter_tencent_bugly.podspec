@@ -13,7 +13,7 @@ A lightweight Flutter monitoring plugin for Tencent Bugly, focusing on mobile ap
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'LeoLi-Byte' => 'sdgrlwh@163.com' }
   s.source           = { :path => '.' }
-  s.source_files = 'flutter_tencent_bugly/Sources/flutter_tencent_bugly/**/*'
+  s.source_files = 'flutter_tencent_bugly/Sources/flutter_tencent_bugly/**/*', 'flutter_tencent_bugly/Sources/BuglyLogBridge/**/*'
   s.dependency 'Flutter'
   s.platform = :ios, '15.0'
 

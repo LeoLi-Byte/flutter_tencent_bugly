@@ -2,6 +2,7 @@ package org.leoli.plugin.flutter_tencent_bugly
 
 import android.content.Context
 import android.os.Build
+import com.tencent.bugly.crashreport.BuglyLog
 import com.tencent.bugly.crashreport.CrashReport
 import io.flutter.Log
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -38,6 +39,7 @@ class FlutterTencentBuglyPlugin : FlutterPlugin, MethodCallHandler {
             "setAppPackageName" -> setPackageName(call, result)
             "putUserData" -> putUserData(call, result)
             "postException" -> postException(call, result)
+            "log" -> log(call, result)
             else -> result.notImplemented()
         }
     }
@@ -67,6 +69,8 @@ class FlutterTencentBuglyPlugin : FlutterPlugin, MethodCallHandler {
         val strategy = CrashReport.UserStrategy(applicationContext)
 
         // 配置参数
+        withArg<Boolean>(call, "isBuglyLogUpload") { strategy.isBuglyLogUpload = it }
+        withArg<Boolean>(call, "isDevelopmentDevice") { setIsDevelopmentDevice(it) }
         withNonEmptyStringArg(call, "channel") { strategy.appChannel = it }
         withNonEmptyStringArg(call, "version") { strategy.appVersion = it }
         withNonEmptyStringArg(call, "packageName") { strategy.appPackageName = it }
@@ -76,10 +80,6 @@ class FlutterTencentBuglyPlugin : FlutterPlugin, MethodCallHandler {
         withArg<Boolean>(call, "isEnableCatchAnrTrace") { strategy.isEnableCatchAnrTrace = it }
         withArg<Boolean>(call, "isEnableRecordAnrMainStack") {
             strategy.isEnableRecordAnrMainStack = it
-        }
-        withArg<Boolean>(call, "isBuglyLogUpload") { strategy.isBuglyLogUpload = it }
-        withArg<Boolean>(call, "isDevelopmentDevice") {
-            CrashReport.setIsDevelopmentDevice(applicationContext, it)
         }
         val isDebugMode = call.argument<Boolean>("isDebugMode") == true
 
@@ -202,10 +202,46 @@ class FlutterTencentBuglyPlugin : FlutterPlugin, MethodCallHandler {
         result.success(true)
     }
 
+    /**
+     * 写入 Bugly 日志，发生 Crash 时随崩溃报告一并上报
+     *
+     * 注意：需初始化时将 isBuglyLogUpload 设为 true，日志才会上传到 Bugly 服务器。
+     */
+    private fun log(call: MethodCall, result: Result) {
+        val tag = call.argument<String>("tag")
+        val message = call.argument<String>("message")
+        withArg<Int>(call, "level") {
+            when (it) {
+                LOG_LEVEL_ERROR -> BuglyLog.e(tag, message)
+                LOG_LEVEL_WARN -> BuglyLog.w(tag, message)
+                LOG_LEVEL_INFO -> BuglyLog.i(tag, message)
+                LOG_LEVEL_DEBUG -> BuglyLog.d(tag, message)
+                LOG_LEVEL_VERBOSE -> BuglyLog.v(tag, message)
+            }
+        }
+        result.success(true)
+    }
+
+    /**
+     * 设置是否为开发设备
+     *
+     * 开发设备的 Crash 上报会被标记为"开发设备"，便于在 Bugly 后台过滤调试期间的数据。
+     */
+    private fun setIsDevelopmentDevice(value: Boolean) {
+        CrashReport.setIsDevelopmentDevice(applicationContext, value)
+    }
+
     private companion object {
         const val TAG = "FlutterTencentBugly"
 
         /** Bugly 自定义异常类别：8 表示 Flutter 异常 */
         const val CRASH_CATEGORY_FLUTTER = 8
+
+        /** 日志级别 */
+        const val LOG_LEVEL_ERROR = 1
+        const val LOG_LEVEL_WARN = 2
+        const val LOG_LEVEL_INFO = 3
+        const val LOG_LEVEL_DEBUG = 4
+        const val LOG_LEVEL_VERBOSE = 5
     }
 }

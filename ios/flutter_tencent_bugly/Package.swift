@@ -15,7 +15,7 @@ let package = Package(
     targets: [
         .target(
             name: "flutter_tencent_bugly",
-            dependencies: ["Bugly"],
+            dependencies: ["Bugly", "BuglyLogBridge"],
             resources: [
                 .process("PrivacyInfo.xcprivacy")
             ],
@@ -25,6 +25,12 @@ let package = Package(
                 .linkedLibrary("c++"),
                 .linkedLibrary("z")
             ]
+        ),
+        .target(
+            name: "BuglyLogBridge",
+            dependencies: ["Bugly"],
+            path: "Sources/BuglyLogBridge",
+            publicHeadersPath: "."
         ),
         .binaryTarget(
             name: "Bugly",

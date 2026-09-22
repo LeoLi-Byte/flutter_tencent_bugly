@@ -2,6 +2,11 @@ import Bugly
 import Flutter
 import UIKit
 
+// SwiftPM 下桥接层为独立 module；CocoaPods 下它与本文件同 module，无需 import。
+#if canImport(BuglyLogBridge)
+    import BuglyLogBridge
+#endif
+
 public class FlutterTencentBuglyPlugin: NSObject, FlutterPlugin {
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "flutter_tencent_bugly", binaryMessenger: registrar.messenger())
@@ -27,6 +32,8 @@ public class FlutterTencentBuglyPlugin: NSObject, FlutterPlugin {
             putUserData(arguments, result: result)
         case "postException":
             postException(arguments, result: result)
+        case "log":
+            log(arguments, result: result)
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -58,6 +65,7 @@ public class FlutterTencentBuglyPlugin: NSObject, FlutterPlugin {
         if let symbolicateInProcessEnable = arguments.optionalBool("symbolicateInProcessEnable") { config.symbolicateInProcessEnable = symbolicateInProcessEnable }
         config.unexpectedTerminatingDetectionEnable = arguments.bool("unexpectedTerminatingDetectionEnable")
         if let viewControllerTrackingEnable = arguments.optionalBool("viewControllerTrackingEnable") { config.viewControllerTrackingEnable = viewControllerTrackingEnable }
+        if let reportLogLevel = arguments["reportLogLevel"] as? NSNumber { config.reportLogLevel = BuglyLogLevel(rawValue: reportLogLevel.uintValue) ?? .silent }
 
         Bugly.start(with: config)
         if config.debugMode {
@@ -111,6 +119,18 @@ public class FlutterTencentBuglyPlugin: NSObject, FlutterPlugin {
             terminateApp: false
         )
         result(true)
+    }
+
+    /// 输出 Bugly 日志，发生 Crash 时随之上报（上报级别由 BuglyConfig.reportLogLevel 控制）
+    ///
+    /// - 参数 `level`：日志级别，对应 BuglyLogLevel（0~5），缺失或越界时按 Silent 处理
+    /// - 参数 `tag`：日志标签，可选
+    /// - 参数 `message`：日志内容，需为已格式化的纯字符串
+    private func log(_ arguments: [String: Any], result: FlutterResult) {
+        let level = (arguments["level"] as? NSNumber).flatMap { BuglyLogLevel(rawValue: $0.uintValue) } ?? .silent
+        let message = arguments["message"] as? String ?? ""
+        BuglyLogBridge.log(with: level, tag: arguments.nonBlankString("tag"), message: message)
+        result(nil)
     }
 
     /// 将字典序列化为 JSON 字符串
