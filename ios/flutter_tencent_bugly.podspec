@@ -17,12 +17,6 @@ A lightweight Flutter monitoring plugin for Tencent Bugly, focusing on mobile ap
   s.dependency 'Flutter'
   s.platform = :ios, '15.0'
 
-  # Vendored Tencent Bugly SDK (static xcframework, mirrors the SPM binaryTarget in flutter_tencent_bugly/Package.swift).
-  s.vendored_frameworks = 'flutter_tencent_bugly/Frameworks/Bugly.xcframework'
-  s.frameworks = 'SystemConfiguration', 'Security'
-  s.libraries = 'c++', 'z'
-  s.static_framework = true
-
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
   s.swift_version = '5.0'
