@@ -1,3 +1,7 @@
+## 1.0.1
+
+* Documentation and packaging updates only; no functional changes.
+
 ## 1.0.0
 
 Initial release of `flutter_tencent_bugly`, a lightweight Flutter plugin wrapping Tencent Bugly
