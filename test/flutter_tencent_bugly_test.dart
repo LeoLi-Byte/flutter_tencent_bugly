@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_tencent_bugly/flutter_tencent_bugly.dart';
-import 'package:flutter_tencent_bugly/src/log_level.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 

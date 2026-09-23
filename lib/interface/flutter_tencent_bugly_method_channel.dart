@@ -38,7 +38,12 @@ class MethodChannelFlutterTencentBugly extends FlutterTencentBuglyPlatform {
     /// If the operating system is not Android or iOS, return false.
     if (!_isSupportPlatform) return false;
 
-    final Map<String, dynamic> map = <String, dynamic>{...?config?.toJson(), ...?android?.toJson(), ...?ios?.toJson()};
+    /// 仅合并当前平台的配置，避免另一平台的 appId 等参数覆盖本平台
+    final Map<String, dynamic> map = <String, dynamic>{
+      ...?config?.toJson(),
+      if (_isAndroid) ...?android?.toJson(),
+      if (_isIOS) ...?ios?.toJson(),
+    };
     final bool? result = await methodChannel.invokeMethod('init', map);
     return result ?? false;
   }
