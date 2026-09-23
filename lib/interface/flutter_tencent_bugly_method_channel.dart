@@ -129,7 +129,11 @@ class MethodChannelFlutterTencentBugly extends FlutterTencentBuglyPlatform {
         reportInDebugMode: reportInDebugMode,
       );
       _installErrorHandlers(filter);
-      runZonedGuarded<T>(body, (Object error, StackTrace stackTrace) => _handleException(error, stackTrace, filter));
+      runZonedGuarded<T>(
+        body,
+        (Object error, StackTrace stackTrace) =>
+            _handleException(FlutterErrorDetails(exception: error, stack: stackTrace), filter),
+      );
     } else {
       body.call();
     }
@@ -144,34 +148,31 @@ class MethodChannelFlutterTencentBugly extends FlutterTencentBuglyPlatform {
     /// previously registered handler instead of replacing it.
     _previousOnError = FlutterError.onError;
     FlutterError.onError = (FlutterErrorDetails details) {
-      final StackTrace? stack = details.stack;
-      if (stack == null) {
-        FlutterError.presentError(details);
-      } else {
-        _handleException(details.exception, stack, filter);
-      }
+      details.stack == null ? FlutterError.presentError(details) : _handleException(details, filter);
     };
 
     /// Capture errors that escape the [Zone] and reach the root isolate,
     /// e.g. errors thrown from native platform channel callbacks.
     _previousPlatformOnError = PlatformDispatcher.instance.onError;
     PlatformDispatcher.instance.onError = (Object error, StackTrace stackTrace) {
-      _handleException(error, stackTrace, filter);
+      _handleException(FlutterErrorDetails(exception: error, stack: stackTrace), filter);
       return _previousPlatformOnError?.call(error, stackTrace) ?? true;
     };
   }
 
   /// 先执行自定义异常处理，再按条件过滤并上报异常。
-  void _handleException(Object error, StackTrace stackTrace, _ExceptionFilter filter) {
+  void _handleException(FlutterErrorDetails details, _ExceptionFilter filter) {
     /// 自定义异常处理，可用于异常打印、双上报等定制逻辑。该字段不影响上报。
-    (filter.onException ?? _previousOnError ?? FlutterError.presentError)(
-      FlutterErrorDetails(exception: error, stack: stackTrace),
-    );
+    (filter.onException ?? _previousOnError ?? FlutterError.presentError).call(details);
+
+    final Object error = details.exception;
 
     /// 不上报的规则判断
     final String? pattern = filter.filterPattern;
-    if (!filter.reportInDebugMode || (pattern != null && RegExp(pattern).hasMatch(error.toString()))) return;
-    postException(type: error.runtimeType, message: error, detail: stackTrace);
+    if ((!filter.reportInDebugMode && kDebugMode) || (pattern != null && RegExp(pattern).hasMatch(error.toString()))) {
+      return;
+    }
+    postException(type: error.runtimeType, message: error, detail: details.stack ?? StackTrace.empty);
   }
 
   /// 判断是否是支持的平台

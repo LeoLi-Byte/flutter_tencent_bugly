@@ -20,39 +20,39 @@ class FlutterTencentBugly {
   }
 
   /// {@macro plugin.flutter_tencent_bugly.init}
-  Future<bool> init({
+  static Future<bool> init({
     FlutterTencentBuglyConfig? config,
     FlutterTencentBuglyAndroidConfig? android,
     FlutterTencentBuglyIOSConfig? ios,
   }) => FlutterTencentBuglyPlatform.instance.init(config: config, android: android, ios: ios);
 
   /// {@macro plugin.flutter_tencent_bugly.setUserId}
-  Future<void> setUserId(String value) => FlutterTencentBuglyPlatform.instance.setUserId(value);
+  static Future<void> setUserId(String value) => FlutterTencentBuglyPlatform.instance.setUserId(value);
 
   /// {@macro plugin.flutter_tencent_bugly.setUserTag}
-  Future<void> setUserTag(String value) => FlutterTencentBuglyPlatform.instance.setUserTag(value);
+  static Future<void> setUserTag(String value) => FlutterTencentBuglyPlatform.instance.setUserTag(value);
 
   /// {@macro plugin.flutter_tencent_bugly.setDeviceID}
-  Future<void> setDeviceID(String value) => FlutterTencentBuglyPlatform.instance.setDeviceID(value);
+  static Future<void> setDeviceID(String value) => FlutterTencentBuglyPlatform.instance.setDeviceID(value);
 
   /// {@macro plugin.flutter_tencent_bugly.setDeviceModel}
-  Future<void> setDeviceModel(String value) => FlutterTencentBuglyPlatform.instance.setDeviceModel(value);
+  static Future<void> setDeviceModel(String value) => FlutterTencentBuglyPlatform.instance.setDeviceModel(value);
 
   /// {@macro plugin.flutter_tencent_bugly.setChannel}
-  Future<void> setChannel(String value) => FlutterTencentBuglyPlatform.instance.setChannel(value);
+  static Future<void> setChannel(String value) => FlutterTencentBuglyPlatform.instance.setChannel(value);
 
   /// {@macro plugin.flutter_tencent_bugly.setVersion}
-  Future<void> setVersion(String value) => FlutterTencentBuglyPlatform.instance.setVersion(value);
+  static Future<void> setVersion(String value) => FlutterTencentBuglyPlatform.instance.setVersion(value);
 
   /// {@macro plugin.flutter_tencent_bugly.setPackageName}
-  Future<void> setPackageName(String value) => FlutterTencentBuglyPlatform.instance.setPackageName(value);
+  static Future<void> setPackageName(String value) => FlutterTencentBuglyPlatform.instance.setPackageName(value);
 
   /// {@macro plugin.flutter_tencent_bugly.putUserData}
-  Future<void> putUserData({required String key, required String value}) =>
+  static Future<void> putUserData({required String key, required String value}) =>
       FlutterTencentBuglyPlatform.instance.putUserData(key: key, value: value);
 
   /// {@macro plugin.flutter_tencent_bugly.postException}
-  Future<void> postException({
+  static Future<void> postException({
     required dynamic message,
     required dynamic detail,
     dynamic type,
@@ -60,11 +60,11 @@ class FlutterTencentBugly {
   }) => FlutterTencentBuglyPlatform.instance.postException(message: message, detail: detail, type: type, extra: extra);
 
   /// {@macro plugin.flutter_tencent_bugly.log}
-  Future<void> log({required String tag, required String message, LogLevel level = .INFO}) =>
+  static Future<void> log({required String tag, required String message, LogLevel level = .INFO}) =>
       FlutterTencentBuglyPlatform.instance.log(tag: tag, message: message, level: level);
 
   /// {@macro plugin.flutter_tencent_bugly.runGuarded}
-  void runGuarded<T>(
+  static void runGuarded<T>(
     ValueGetter<T> body, {
     FlutterExceptionHandler? onException,
     String? filterPattern,

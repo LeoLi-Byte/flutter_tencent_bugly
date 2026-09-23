@@ -175,13 +175,12 @@ class FlutterTencentBuglyPlugin : FlutterPlugin, MethodCallHandler {
      * 上报自定义异常
      */
     private fun postException(call: MethodCall, result: Result) {
-        val type = call.argument<String>("type")
-        val message = call.argument<String>("message").orEmpty()
         withNonEmptyStringArg(call, "detail") {
             CrashReport.postException(
                 CRASH_CATEGORY_FLUTTER,
-                if (type.isNullOrEmpty()) message else type,
-                message,
+                call.argument<String>("type").takeUnless { t -> t.isNullOrEmpty() }
+                    ?: "FlutterException",
+                call.argument<String>("message").orEmpty(),
                 it,
                 call.argument<Map<String, Any?>>("data")?.mapValues { (_, v) -> v.toString() }
             )

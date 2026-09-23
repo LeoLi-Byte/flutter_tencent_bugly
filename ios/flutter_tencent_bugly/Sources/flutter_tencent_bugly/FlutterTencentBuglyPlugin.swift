@@ -102,15 +102,11 @@ public class FlutterTencentBuglyPlugin: NSObject, FlutterPlugin {
 
     /// 上报自定义异常
     private func postException(_ arguments: [String: Any], result: FlutterResult) {
-        let detail = arguments["detail"] as? String
-        let message = detail.isBlankOrNil ? "" : (arguments["message"] as? String ?? "")
-        let type = arguments.nonBlankString("type") ?? message
-
         Bugly.reportException(
             withCategory: 5,
-            name: type,
-            reason: message,
-            callStack: detail?.components(separatedBy: "") ?? [],
+            name: arguments.nonBlankString("type") ?? "FlutterException",
+            reason: arguments.nonBlankString("message") ?? "",
+            callStack: arguments.nonBlankString("detail")?.components(separatedBy: "") ?? [],
             extraInfo: arguments["data"] as? [String: Any] ?? [:],
             terminateApp: false
         )
