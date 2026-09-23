@@ -153,7 +153,7 @@ class _BuglyHomePageState extends State<BuglyHomePage> {
                     ),
                     _ActionButton(
                       label: '设置用户标签',
-                      onPressed: () => _run('设置用户标签', () => FlutterTencentBugly.setUserTag(1001)),
+                      onPressed: () => _run('设置用户标签', () => FlutterTencentBugly.setUserTag(9527)),
                     ),
                     _ActionButton(
                       label: '设置自定义数据',
