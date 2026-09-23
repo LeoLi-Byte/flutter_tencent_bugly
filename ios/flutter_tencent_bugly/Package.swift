@@ -23,7 +23,8 @@ let package = Package(
                 .linkedFramework("SystemConfiguration"),
                 .linkedFramework("Security"),
                 .linkedLibrary("c++"),
-                .linkedLibrary("z")
+                .linkedLibrary("z"),
+                .unsafeFlags(["-ObjC"])
             ]
         ),
         .target(
