@@ -152,9 +152,7 @@ class MethodChannelFlutterTencentBugly extends FlutterTencentBuglyPlatform {
     /// Capture errors reported by the Flutter framework, chaining the
     /// previously registered handler instead of replacing it.
     _previousOnError = FlutterError.onError;
-    FlutterError.onError = (FlutterErrorDetails details) {
-      details.stack == null ? FlutterError.presentError(details) : _handleException(details, filter);
-    };
+    FlutterError.onError = (FlutterErrorDetails details) => _handleException(details, filter);
 
     /// Capture errors that escape the [Zone] and reach the root isolate,
     /// e.g. errors thrown from native platform channel callbacks.
@@ -177,7 +175,7 @@ class MethodChannelFlutterTencentBugly extends FlutterTencentBuglyPlatform {
     if ((!filter.reportInDebugMode && kDebugMode) || (pattern != null && RegExp(pattern).hasMatch(error.toString()))) {
       return;
     }
-    postException(type: error.runtimeType, message: error, detail: details.stack ?? StackTrace.empty);
+    postException(type: error.runtimeType, message: error, detail: details.stack ?? StackTrace.current);
   }
 
   /// 判断是否是支持的平台
