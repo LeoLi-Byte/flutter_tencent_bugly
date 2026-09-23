@@ -28,8 +28,8 @@ side and reports them to Bugly — no extra wiring required.
 
 1. Sign in to the [Bugly console](https://bugly.qq.com/v2/index) and create a product for each
    platform (one for Android, one for iOS — each gets its own AppID).
-2. Open the product you just created, go to **Settings → Product Info**, and record the **AppID**
-   for the initialization below.
+2. Open the product you just created, go to **更多 → 产品设置** in the upper right corner, and
+   record the **App ID** for the initialization below.
 
 > This plugin wraps the open-source Bugly (the `crashreport` SDK): **only an AppID is needed** —
 > no AppKey, and no traffic package to purchase. Those belong to Bugly Pro (`bugly_pro_flutter`),

@@ -26,7 +26,7 @@
 
 1. 登录 [Bugly 平台](https://bugly.qq.com/v2/index)创建产品，接入平台分别选择 Android 与
    iOS（双端各创建一个产品，各有一个 AppID）。
-2. 进入刚创建的产品，打开 **设置 → 产品信息**，记录下 **AppID**，后续初始化时使用。
+2. 进入刚创建的产品，打开 右上角 **更多 → 产品设置**，记录下 **App ID**，后续初始化时使用。
 
 > 本插件封装的是开源版 Bugly（crashreport SDK），**仅需 AppID**，无需 AppKey，也无需购买
 > 流量包 —— 那是 Bugly Pro（`bugly_pro_flutter`）的计费模式，二者不要混淆。
