@@ -40,7 +40,7 @@ Standard Flutter plugin layered architecture; every new plugin capability must t
 4. **Android** — `android/src/main/kotlin/org/leoli/plugin/flutter_tencent_bugly/FlutterTencentBuglyPlugin.kt`: `FlutterPlugin` + `MethodCallHandler` with a `when` on `call.method`.
 5. **iOS** — `ios/flutter_tencent_bugly/Sources/flutter_tencent_bugly/FlutterTencentBuglyPlugin.swift`: `FlutterPlugin` with a `switch` on `call.method`. There is a second target, **`Sources/BuglyLogBridge/`** (Objective-C), because Bugly's `BLYLog*` macros are not callable from Swift; the Swift file imports it conditionally (`#if canImport(BuglyLogBridge)`) since it's a separate module under SwiftPM but same-module under CocoaPods.
 
-Method names **and argument keys** must match exactly across the Dart channel call, the Kotlin `when`, and the Swift `switch`.
+Method names **and argument keys** must match exactly across the Dart channel call, the Kotlin `when`, and the Swift `switch`. The Swift `switch` intentionally covers only the shared subset — Android-only methods never reach iOS because the method-channel layer gates them before invoking the channel.
 
 ### Supporting Dart code (`lib/src/`)
 
