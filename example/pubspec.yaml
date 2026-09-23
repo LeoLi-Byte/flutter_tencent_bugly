@@ -4,6 +4,8 @@ description: "Demonstrates how to use the flutter_tencent_bugly plugin."
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
+version: 1.0.0+1
+
 environment:
   sdk: ^3.11.5
 
@@ -16,7 +18,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
   flutter_tencent_bugly:
     # When depending on this package from a real application you should use:
     #   flutter_tencent_bugly: ^x.y.z
@@ -24,6 +25,7 @@ dependencies:
     # The example app is bundled with the plugin so we use a path dependency on
     # the parent directory to use the current plugin's version.
     path: ../
+  package_info_plus: ^10.2.1
 
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to
