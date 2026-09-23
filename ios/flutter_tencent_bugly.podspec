@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'flutter_tencent_bugly'
-  s.version          = '0.0.1'
+  s.version          = '1.0.1'
   s.summary          = 'A lightweight Flutter monitoring plugin for Tencent Bugly, focusing on mobile application exception capture and operational data analysis.'
   s.description      = <<-DESC
 A lightweight Flutter monitoring plugin for Tencent Bugly, focusing on mobile application exception capture and operational data analysis.
