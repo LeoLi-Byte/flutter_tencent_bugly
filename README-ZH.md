@@ -22,13 +22,13 @@
   flutter: ">=3.41.0"
 ```
 
-### 第一步：创建产品，获取 AppID
+### 第一步：创建产品，获取 App ID
 
 1. 登录 [Bugly 平台](https://bugly.qq.com/v2/index)创建产品，接入平台分别选择 Android 与
-   iOS（双端各创建一个产品，各有一个 AppID）。
+   iOS（双端各创建一个产品，各有一个 App ID）。
 2. 进入刚创建的产品，打开 右上角 **更多 → 产品设置**，记录下 **App ID**，后续初始化时使用。
 
-> 本插件封装的是开源版 Bugly（crashreport SDK），**仅需 AppID**，无需 AppKey，也无需购买
+> 本插件封装的是开源版 Bugly（crashreport SDK），**仅需 App ID**，无需 AppKey，也无需购买
 > 流量包 —— 那是 Bugly Pro（`bugly_pro_flutter`）的计费模式，二者不要混淆。
 
 ### 第二步：添加依赖
@@ -148,21 +148,21 @@ await FlutterTencentBugly.log(
 
 ### `FlutterTencentBuglyAndroidConfig`
 
-| 名称                         | 类型        | 默认值     | 说明                       |
-|----------------------------|-----------|---------|--------------------------|
-| `appId`                    | `String`  | 必填      | 在 Bugly 平台创建产品时申请的 AppID |
-| `packageName`              | `String?` | `null`  | 包名                       |
-| `deviceModel`              | `String?` | `null`  | 设备型号                     |
-| `reportDelay`              | `int`     | `0`     | 初始化延迟间隔，单位为秒             |
-| `enableCatchAnrTrace`      | `bool`    | `false` | ANR 时是否获取系统 trace 文件     |
-| `enableRecordAnrMainStack` | `bool`    | `true`  | 是否获取 ANR 过程中的主线程堆栈       |
-| `isLogUpload`              | `bool`    | `true`  | 是否上传自定义日志到 Bugly         |
+| 名称                         | 类型        | 默认值     | 说明                        |
+|----------------------------|-----------|---------|---------------------------|
+| `appId`                    | `String`  | 必填      | 在 Bugly 平台创建产品时申请的 App ID |
+| `packageName`              | `String?` | `null`  | 包名                        |
+| `deviceModel`              | `String?` | `null`  | 设备型号                      |
+| `reportDelay`              | `int`     | `0`     | 初始化延迟间隔，单位为秒              |
+| `enableCatchAnrTrace`      | `bool`    | `false` | ANR 时是否获取系统 trace 文件      |
+| `enableRecordAnrMainStack` | `bool`    | `true`  | 是否获取 ANR 过程中的主线程堆栈        |
+| `isLogUpload`              | `bool`    | `true`  | 是否上传自定义日志到 Bugly          |
 
 ### `FlutterTencentBuglyIOSConfig`
 
 | 名称                                     | 类型       | 默认值    | 说明                                                                          |
 |----------------------------------------|----------|--------|-----------------------------------------------------------------------------|
-| `appId`                                | `String` | 必填     | 在 Bugly 平台创建产品时申请的 AppID                                                    |
+| `appId`                                | `String` | 必填     | 在 Bugly 平台创建产品时申请的 App ID                                                   |
 | `blockMonitorEnable`                   | `bool`   | `true` | 卡顿监控开关                                                                      |
 | `blockMonitorTimeout`                  | `int`    | `3`    | 卡顿监控判断间隔，单位为秒                                                               |
 | `symbolicateInProcessEnable`           | `bool`   | `true` | 进程内还原开关                                                                     |

@@ -24,14 +24,14 @@ side and reports them to Bugly — no extra wiring required.
   flutter: ">=3.41.0"
 ```
 
-### Step 1: Create products and get your AppIDs
+### Step 1: Create products and get your App IDs
 
 1. Sign in to the [Bugly console](https://bugly.qq.com/v2/index) and create a product for each
-   platform (one for Android, one for iOS — each gets its own AppID).
+   platform (one for Android, one for iOS — each gets its own App ID).
 2. Open the product you just created, go to **更多 → 产品设置** in the upper right corner, and
    record the **App ID** for the initialization below.
 
-> This plugin wraps the open-source Bugly (the `crashreport` SDK): **only an AppID is needed** —
+> This plugin wraps the open-source Bugly (the `crashreport` SDK): **only an App ID is needed** —
 > no AppKey, and no traffic package to purchase. Those belong to Bugly Pro (`bugly_pro_flutter`),
 > a different, paid offering; don't confuse the two.
 
@@ -153,27 +153,27 @@ await FlutterTencentBugly.log(
 
 ### `FlutterTencentBuglyAndroidConfig`
 
-| Name                      | Type      | Default    | Description                                              |
-|---------------------------|-----------|------------|----------------------------------------------------------|
-| `appId`                   | `String`  | required   | The AppID registered on the Bugly console.               |
-| `packageName`             | `String?` | `null`     | Package name.                                            |
-| `deviceModel`             | `String?` | `null`     | Device model.                                            |
-| `reportDelay`             | `int`     | `0`        | Init delay interval, in seconds.                         |
-| `enableCatchAnrTrace`     | `bool`    | `false`    | Whether to capture the system trace file on ANR.         |
-| `enableRecordAnrMainStack`| `bool`    | `true`     | Whether to record the main-thread stack during ANR.      |
-| `isLogUpload`             | `bool`    | `true`     | Whether to upload custom logs to Bugly.                  |
+| Name                       | Type      | Default  | Description                                         |
+|----------------------------|-----------|----------|-----------------------------------------------------|
+| `appId`                    | `String`  | required | The App ID registered on the Bugly console.         |
+| `packageName`              | `String?` | `null`   | Package name.                                       |
+| `deviceModel`              | `String?` | `null`   | Device model.                                       |
+| `reportDelay`              | `int`     | `0`      | Init delay interval, in seconds.                    |
+| `enableCatchAnrTrace`      | `bool`    | `false`  | Whether to capture the system trace file on ANR.    |
+| `enableRecordAnrMainStack` | `bool`    | `true`   | Whether to record the main-thread stack during ANR. |
+| `isLogUpload`              | `bool`    | `true`   | Whether to upload custom logs to Bugly.             |
 
 ### `FlutterTencentBuglyIOSConfig`
 
-| Name                                  | Type     | Default  | Description                                                                                                  |
-|---------------------------------------|----------|----------|--------------------------------------------------------------------------------------------------------------|
-| `appId`                               | `String` | required | The AppID registered on the Bugly console.                                                                   |
-| `blockMonitorEnable`                  | `bool`   | `true`   | Block (UI hang) monitoring switch.                                                                           |
-| `blockMonitorTimeout`                 | `int`    | `3`      | Block detection threshold, in seconds.                                                                       |
-| `symbolicateInProcessEnable`          | `bool`   | `true`   | In-process symbolication switch.                                                                             |
-| `unexpectedTerminatingDetectionEnable`| `bool`   | `true`   | Abnormal-termination event recording switch.                                                                 |
-| `viewControllerTrackingEnable`        | `bool`   | `true`   | View controller tracking switch.                                                                             |
-| `reportLogLevel`                      | `int`    | `0`      | Controls custom log reporting (`BuglyLogLevel`): 0 Silent, 1 Error, 2 Warn, 3 Info, 4 Debug, 5 Verbose.      |
+| Name                                   | Type     | Default  | Description                                                                                             |
+|----------------------------------------|----------|----------|---------------------------------------------------------------------------------------------------------|
+| `appId`                                | `String` | required | The App ID registered on the Bugly console.                                                             |
+| `blockMonitorEnable`                   | `bool`   | `true`   | Block (UI hang) monitoring switch.                                                                      |
+| `blockMonitorTimeout`                  | `int`    | `3`      | Block detection threshold, in seconds.                                                                  |
+| `symbolicateInProcessEnable`           | `bool`   | `true`   | In-process symbolication switch.                                                                        |
+| `unexpectedTerminatingDetectionEnable` | `bool`   | `true`   | Abnormal-termination event recording switch.                                                            |
+| `viewControllerTrackingEnable`         | `bool`   | `true`   | View controller tracking switch.                                                                        |
+| `reportLogLevel`                       | `int`    | `0`      | Controls custom log reporting (`BuglyLogLevel`): 0 Silent, 1 Error, 2 Warn, 3 Info, 4 Debug, 5 Verbose. |
 
 ### `LogLevel`
 
