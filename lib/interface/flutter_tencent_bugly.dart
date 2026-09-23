@@ -30,7 +30,7 @@ class FlutterTencentBugly {
   static Future<void> setUserId(String value) => FlutterTencentBuglyPlatform.instance.setUserId(value);
 
   /// {@macro plugin.flutter_tencent_bugly.setUserTag}
-  static Future<void> setUserTag(String value) => FlutterTencentBuglyPlatform.instance.setUserTag(value);
+  static Future<void> setUserTag(int value) => FlutterTencentBuglyPlatform.instance.setUserTag(value);
 
   /// {@macro plugin.flutter_tencent_bugly.setDeviceID}
   static Future<void> setDeviceID(String value) => FlutterTencentBuglyPlatform.instance.setDeviceID(value);

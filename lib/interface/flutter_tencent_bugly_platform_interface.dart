@@ -51,7 +51,7 @@ abstract class FlutterTencentBuglyPlatform extends PlatformInterface {
   /// {@template plugin.flutter_tencent_bugly.setUserTag}
   /// 设置标签
   /// {@endtemplate}
-  Future<void> setUserTag(String value) {
+  Future<void> setUserTag(int value) {
     throw UnimplementedError('setUserTag() has not been implemented.');
   }
 

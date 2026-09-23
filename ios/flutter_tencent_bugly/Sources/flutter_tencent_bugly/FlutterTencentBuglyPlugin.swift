@@ -101,15 +101,19 @@ public class FlutterTencentBuglyPlugin: NSObject, FlutterPlugin {
     }
 
     /// 上报自定义异常
+    ///
+    /// 与 Android 端行为保持一致：`detail` 缺失或空白时静默跳过上报，但仍返回成功。
     private func postException(_ arguments: [String: Any], result: FlutterResult) {
-        Bugly.reportException(
-            withCategory: 5,
-            name: arguments.nonBlankString("type") ?? "FlutterException",
-            reason: arguments.nonBlankString("message") ?? "",
-            callStack: arguments.nonBlankString("detail")?.components(separatedBy: "") ?? [],
-            extraInfo: arguments["data"] as? [String: Any] ?? [:],
-            terminateApp: false
-        )
+        if let detail = arguments.nonBlankString("detail") {
+            Bugly.reportException(
+                withCategory: 5,
+                name: arguments.nonBlankString("type") ?? "FlutterException",
+                reason: arguments.nonBlankString("message") ?? "",
+                callStack: detail.components(separatedBy: "\n"),
+                extraInfo: arguments["data"] as? [String: Any] ?? [:],
+                terminateApp: false
+            )
+        }
         result(true)
     }
 
@@ -122,7 +126,7 @@ public class FlutterTencentBuglyPlugin: NSObject, FlutterPlugin {
         let level = (arguments["level"] as? NSNumber).flatMap { BuglyLogLevel(rawValue: $0.uintValue) } ?? .silent
         let message = arguments["message"] as? String ?? ""
         BuglyLogBridge.log(with: level, tag: arguments.nonBlankString("tag"), message: message)
-        result(nil)
+        result(true)
     }
 }
 

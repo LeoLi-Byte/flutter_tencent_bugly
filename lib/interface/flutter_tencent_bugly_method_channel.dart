@@ -50,8 +50,8 @@ class MethodChannelFlutterTencentBugly extends FlutterTencentBuglyPlatform {
   }
 
   @override
-  Future<void> setUserTag(String value) async {
-    if (!_isSupportPlatform || value.isBlank) return;
+  Future<void> setUserTag(int value) async {
+    if (!_isSupportPlatform) return;
     await methodChannel.invokeMethod('setUserTag', <String, dynamic>{'value': value});
   }
 

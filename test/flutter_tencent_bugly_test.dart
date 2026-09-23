@@ -19,7 +19,7 @@ class MockFlutterTencentBuglyPlatform with MockPlatformInterfaceMixin implements
   Future<void> setUserId(String value) => Future<void>.value();
 
   @override
-  Future<void> setUserTag(String value) => Future<void>.value();
+  Future<void> setUserTag(int value) => Future<void>.value();
 
   @override
   Future<void> setDeviceID(String value) => Future<void>.value();
